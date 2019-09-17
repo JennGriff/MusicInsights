@@ -1,0 +1,46 @@
+---
+title: "Music Insights"
+author: Jennifer Griffiths
+output: html_notebook
+---
+
+First we need to install tidyverse
+
+```{r}
+
+#install.packages("tidyverse")
+library(tidyverse)
+
+## read directly from source adds authenticity, consistency 
+## avoid absolute paths : the whole path from root
+## use relative paths : relative to this project
+## can use urls
+## ?read_csv
+
+survey <- read_csv("https://raw.githubusercontent.com/introdsci/MusicSurvey/master/music-survey.csv")
+
+preferences <- read_csv("https://raw.githubusercontent.com/introdsci/MusicSurvey/master/preferences-survey.csv")
+```
+
+```{r}
+## Inspect Data
+
+View(preferences)
+nrow(preferences)
+ncol(preferences)
+levels(preferences$`What was your pseudonym?`)
+#summary(preferences)
+
+## Interpreting NA with na option
+```
+
+```{r}
+##Changing the name of a column
+
+colnames(survey)[colnames(survey) == "What is your pseudonym?" ] <- "pseudonym"
+
+colnames(survey)[colnames(survey)== "First, we are going to create a pseudonym for you to keep this survey anonymous (more or less). Which pseudonym generator would you prefer?"] <- "generator_name"
+
+
+```
+
