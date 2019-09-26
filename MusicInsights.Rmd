@@ -8,13 +8,29 @@ First we need to install tidyverse
 
 ```{r}
 
+#There are 3 interrelated rules which make a dataset tidy:
+#
+## 1. Each variable must have its own column.
+#
+##2. Each observation must have its own row.
+#
+##3. Each value must have its own cell.
+
+#####practical instructions:
+#
+# 1. Put each dataset in a tibble.
+#
+# 2. Put each variable in a column.
+
 #install.packages("tidyverse")
 library(tidyverse)
 
-## read directly from source adds authenticity, consistency 
-## avoid absolute paths : the whole path from root
-## use relative paths : relative to this project
-## can use urls
+## Read directly from source adds authenticity and consistency 
+
+## Avoid absolute paths : the whole path from root
+
+## Use relative paths : relative to this project. Can use urls
+
 ## ?read_csv
 
 survey <- read_csv("https://raw.githubusercontent.com/introdsci/MusicSurvey/master/music-survey.csv")
@@ -34,6 +50,7 @@ levels(preferences$`What was your pseudonym?`)
 ## Interpreting NA with na option
 ```
 
+Cleaning data frame column names:
 ```{r}
 ##Changing the name of a column
 
@@ -43,4 +60,39 @@ colnames(survey)[colnames(survey)== "First, we are going to create a pseudonym f
 
 
 ```
+
+
+Notes::
+```{r}
+#split string by a character (, " ")
+?strsplit
+
+#Parse functions
+?parse_datetime
+
+```
+
+```{r}
+
+```
+
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+
+
 
