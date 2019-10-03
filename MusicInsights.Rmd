@@ -64,6 +64,10 @@ colnames(survey)[colnames(survey) == "Song" ] <- "favorite_song"
 
 #favorite_song_link
 colnames(survey)[colnames(survey) == "Link to song (on Youtube or Vimeo)" ] <- "favorite_song_link"
+
+##preferences dataframe
+colnames(preferences)[colnames(preferences) == "What was your pseudonym?" ] <- "pseudonym"
+
 ```
 
 ###Load dplyr and tidyr libraries
@@ -94,6 +98,16 @@ Person$time_submitted[1]
 #check portions of updated format at index 1
 Person$time_submitted[1]$hour
 Person$time_submitted[1]$min
+
+#levels(Person$academic_major) is not currently a factor
+
+# To convert Person$academic_major to a  factor:
+Person$academic_major <-as.factor(Person$academic_major)
+
+#Join upper and lower case versions of CINS
+levels(Person$academic_major)[levels(Person$academic_major) == "Computer information systems"] <- "Computer Information Systems"
+
+levels(Person$academic_major)
 ```
 
 ##FavoriteSong Tibble
@@ -103,23 +117,21 @@ FavoriteSong <- tibble(pseudonym = survey$pseudonym, artist =  survey$favorite_s
 
 #Tidy data for Ratings table
 ```{r}
+colnames(preferences)
+```
+
+#Using Tidyr to clean up 
+
+```{r}
+
+
+preferences <-gather(preferences, key = artist_song,"40 crew\tNot Enough", "Arctic Monkeys Arabella","Avatar\tThe Eagle Has Landed","Ben Folds\tStill", "blink-182\tShe's Out Of Her Mind", "brian jonestown massacre / sarabeth tucek\tSeer", "BROCKHAMPTON\tNO HALO", "Brother Ali\tCan't Take That Away", "Daboii\tBeat in a Chokehold", "Daniel Caesar\tOpen Up", "De La Soul\tPatty Dooke", "Dead Kennedys\tKill The Poor",  "Dominic Fike\t3 Nights", "Gorillaz\tAny but here is Humility", "Dream Theater\tA Change of Seasons", "Ed Sheeran\tDive", "General Levy\tIncredible (Remix)", "Hiroyuki Sawano\tS-ave" , "Jai Paul\tDo You Love Her Now",   "Johnny Cash\tWe'll Meet Again",  "Kane Brown\tWhat's Mine is Yours", "Kim Petras\tI dont want it at all" , "Led Zeppelin\tHey Hey What Can I Do", "Marshmello\tOne Thing Right","Matisyahu\tOne Day", "MF DOOM\tPotholderz"  ,  "mozzy\tbladadah" ,    "Oliver Tree\tHurt", "Radiohead\tweird fishes arpeggi","Rick Astley\tNever Going to Give You Up",  "Sia\tElastic Heart" ,   "Sixtoo\tJackals and Vipers in Envy of Man [Album]",  "Snakehips\tEither Way", "Sufjan Stevens\tShould Have Known Better",  "Tame Impala\tPatience",  "The Black Keys\tUnknown Brother",   "The Byrds\tMr. Spaceman" ,   "Tool\tFear Inoculum", "Traffic\tDear Mr. Fantasy" , "Travis Scott\tAstrothunder",  "Virtual Self\tAngel Voices" , "Wheezer\tBuddy Holly", "Rainbow Kitten Surprise\tCocaine Jesus" ,  "40 crew\tNot Enough"   )
+
 
 ```
 
 ##Ratings Tibble
 ```{r}
-#Ratings <- tibble()
+#Ratings <- tibble(pseudonym = preferences$pseudonym, artist_song = preferences$artist_song, )
 ```
-#Using Tidyr to clean up 
-
-```{r}
-#gather()
-#spread()
-```
-
-```{r}
-
-```
-
-
 
