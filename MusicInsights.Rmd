@@ -130,8 +130,15 @@ preferences <-gather(preferences, key = artist_song,"40 crew\tNot Enough", "Arct
 
 ```
 
+```{r}
+
+colnames(preferences)[colnames(preferences) == "40 crew\tNot Enough" ] <- "rating"
+
+
+```
+
 ##Ratings Tibble
 ```{r}
-#Ratings <- tibble(pseudonym = preferences$pseudonym, artist_song = preferences$artist_song, )
+Ratings <- tibble(pseudonym = preferences$pseudonym, artist_song = preferences$artist_song, rating =  preferences$rating )
 ```
 
