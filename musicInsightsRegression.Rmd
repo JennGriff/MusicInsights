@@ -1,0 +1,70 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r echo=FALSE, message=FALSE, error=FALSE, warning=FALSE, results='hide'}
+include <- function(library_name){
+  if( !(library_name %in% installed.packages()) )
+    install.packages(library_name) 
+  library(library_name, character.only=TRUE)
+}
+include("tidyverse")
+include("knitr")
+purl("MusicInsights.Rmd", output = "part1.r")
+source("part1.r")
+
+
+
+```
+##Aggregate Ratings on Preferences Table 
+### for mean summary statistic
+```{r}
+test <- aggregate(preferences$rating, by=list(preferences$pseudonym), FUN=mean)
+#Revert column names to what they actually represent
+colnames(test)[colnames(test) == "Group.1" ] <- "pseudonym"
+colnames(test)[colnames(test) == "x" ] <- "averageRating"
+
+## Join Person tibble with mean rating across pseudonym
+Person <- full_join(test, Person)
+Person <- na.omit(Person)
+#Person$generator_name <-as.factor(Person$generator_name)
+#Person$sex <-as.factor(Person$sex)
+#Person$year_born <-as.factor(Person$year_born)
+#Person$time_submitted <-as.factor(Person$time_submitted)
+glimpse(Person)
+
+```
+
+
+```{r}
+#install.packages('caret')
+library(caret)
+##FOR PERSON TABLE
+set.seed(385)
+
+# pass in y value (to be predicted)
+sample_selection <- createDataPartition(Person$averageRating, p = 0.75, list = FALSE)
+  
+train <- Person[sample_selection, ]
+test <- Person[-sample_selection, ]
+
+##BUILD MODEL FOR ALL VARIABLES::
+train_model <- lm(averageRating~ sex + academic_major + year_born +  generator_name, data = train)
+summary(train_model)
+
+```
+
+```{r}
+#LetsPredict model + dataset
+predictions <- train_model %>% predict(test)
+predictions
+
+test$averageRating
+##
+R2(predictions, test$averageRating)
+
+## Smaller the number the better the prediction. This is a 
+# measure of the mean difference from regression line :: residuals
+MAE(predictions, test$averageRating)
+```
